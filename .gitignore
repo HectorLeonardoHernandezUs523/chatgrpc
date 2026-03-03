@@ -1,0 +1,39 @@
+# =============================================================================
+# .gitignore — Archivos y carpetas excluidos del repositorio
+# =============================================================================
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Entorno virtual ─────────────────────────────────────────────────────────
+venv/
+env/
+.venv/
+.env
+
+# ── Credenciales (NUNCA subir al repositorio) ───────────────────────────────
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
+
+# ── gRPC generado (se regenera con el build) ───────────────────────────────
+backend/chat_pb2.py
+backend/chat_pb2_grpc.py
+
+# ── IDE / Editor ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Node (por si se agrega algo en el futuro) ──────────────────────────────
+node_modules/

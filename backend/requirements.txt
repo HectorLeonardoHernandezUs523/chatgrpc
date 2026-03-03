@@ -1,0 +1,20 @@
+# =============================================================================
+# requirements.txt — Dependencias del backend
+# =============================================================================
+# gRPC y herramientas de compilación de .proto
+grpcio==1.68.1
+grpcio-tools==1.68.1
+protobuf==5.29.2
+
+# Firebase Admin SDK (incluye Firestore)
+firebase-admin==6.6.0
+
+# Flask (bridge REST para el frontend)
+Flask==3.1.0
+flask-cors==5.0.1
+
+# Variables de entorno desde archivo .env
+python-dotenv==1.0.1
+
+# Servidor WSGI para producción
+gunicorn==23.0.0

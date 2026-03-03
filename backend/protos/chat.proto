@@ -1,0 +1,84 @@
+// ============================================================================
+// Archivo: chat.proto
+// Descripción: Definición del servicio gRPC para el Chat Web.
+// Define los mensajes y métodos RPC utilizados para la comunicación
+// entre el cliente y el servidor.
+// ============================================================================
+
+syntax = "proto3";
+
+package chat;
+
+// ── Mensajes de autenticación ───────────────────────────────────────────────
+
+// Solicitud para registrar un nuevo usuario.
+message RegisterRequest {
+  string username = 1;  // Nombre de usuario (único)
+  string password = 2;  // Contraseña del usuario
+}
+
+// Respuesta al intento de registro.
+message RegisterResponse {
+  bool   success = 1;  // true si el registro fue exitoso
+  string detail  = 2;  // Mensaje descriptivo del resultado
+}
+
+// Solicitud para iniciar sesión.
+message LoginRequest {
+  string username = 1;  // Nombre de usuario
+  string password = 2;  // Contraseña del usuario
+}
+
+// Respuesta al intento de inicio de sesión.
+message LoginResponse {
+  bool   success = 1;  // true si las credenciales son correctas
+  string detail  = 2;  // Mensaje descriptivo del resultado
+}
+
+// ── Mensajes de chat ────────────────────────────────────────────────────────
+
+// Representa un mensaje de chat enviado por un usuario.
+message ChatMessage {
+  string username  = 1;  // Nombre del usuario que envía el mensaje
+  string message   = 2;  // Contenido del mensaje
+  string timestamp = 3;  // Marca de tiempo en formato ISO 8601
+}
+
+// Solicitud para enviar un nuevo mensaje al servidor.
+message SendMessageRequest {
+  string username = 1;  // Nombre del usuario
+  string message  = 2;  // Contenido del mensaje
+}
+
+// Respuesta del servidor al enviar un mensaje exitosamente.
+message SendMessageResponse {
+  bool   success = 1;  // Indica si el mensaje fue guardado correctamente
+  string detail  = 2;  // Detalle adicional (ej. mensaje de confirmación)
+}
+
+// Solicitud para obtener la lista de mensajes almacenados.
+message GetMessagesRequest {
+  // Vacío: se obtienen todos los mensajes ordenados por timestamp.
+}
+
+// Respuesta con la lista de mensajes del chat.
+message GetMessagesResponse {
+  repeated ChatMessage messages = 1;  // Lista de mensajes ordenados
+}
+
+// ── Servicio ────────────────────────────────────────────────────────────────
+
+// Servicio principal del Chat que expone los métodos RPC.
+service ChatService {
+  // Registra un nuevo usuario en el sistema.
+  rpc RegisterUser (RegisterRequest) returns (RegisterResponse);
+
+  // Inicia sesión con credenciales existentes.
+  rpc LoginUser (LoginRequest) returns (LoginResponse);
+
+  // Envía un mensaje al servidor para ser almacenado en Firestore.
+  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
+
+  // Obtiene todos los mensajes almacenados, ordenados por fecha y hora.
+  rpc GetMessages (GetMessagesRequest) returns (GetMessagesResponse);
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gRPC Chat — Mensajería en Tiempo Real</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts — Inter para un look limpio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <!-- ═══════════════════════ PANTALLA DE AUTH (Login / Registro) ═══════════════════════ -->
+  <div id="auth-screen" class="screen active">
+    <div class="login-card">
+      <div class="login-icon">💬</div>
+      <h1>gRPC Chat</h1>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+        <button class="auth-tab" data-tab="register">Registrarse</button>
+      </div>
+
+      <!-- Formulario de Login -->
+      <form id="login-form" class="auth-form active" autocomplete="off">
+        <input
+          type="text"
+          id="login-username"
+          placeholder="Nombre de usuario"
+          maxlength="30"
+          autocomplete="username"
+          required
+        />
+        <input
+          type="password"
+          id="login-password"
+          placeholder="Contraseña"
+          maxlength="50"
+          autocomplete="current-password"
+          required
+        />
+        <div id="login-error" class="auth-error"></div>
+        <button type="submit" id="login-btn">Entrar</button>
+      </form>
+
+      <!-- Formulario de Registro -->
+      <form id="register-form" class="auth-form" autocomplete="off">
+        <input
+          type="text"
+          id="register-username"
+          placeholder="Nombre de usuario (mín. 3 caracteres)"
+          maxlength="30"
+          autocomplete="username"
+          required
+        />
+        <input
+          type="password"
+          id="register-password"
+          placeholder="Contraseña (mín. 4 caracteres)"
+          maxlength="50"
+          autocomplete="new-password"
+          required
+        />
+        <input
+          type="password"
+          id="register-password-confirm"
+          placeholder="Confirmar contraseña"
+          maxlength="50"
+          autocomplete="new-password"
+          required
+        />
+        <div id="register-error" class="auth-error"></div>
+        <div id="register-success" class="auth-success"></div>
+        <button type="submit" id="register-btn">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ PANTALLA DE CHAT ═══════════════════════ -->
+  <div id="chat-screen" class="screen">
+    <!-- Header -->
+    <header class="chat-header">
+      <div class="header-left">
+        <span class="header-icon">💬</span>
+        <div>
+          <h2>gRPC Chat</h2>
+          <span id="connection-status" class="status online">Conectado</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span id="current-user" class="user-badge"></span>
+        <button id="logout-btn" title="Salir">✕</button>
+      </div>
+    </header>
+
+    <!-- Área de mensajes -->
+    <main id="messages-container" class="messages-container">
+      <div id="messages-list" class="messages-list">
+        <!-- Los mensajes se insertan dinámicamente aquí -->
+      </div>
+    </main>
+
+    <!-- Barra de entrada -->
+    <footer class="input-bar">
+      <input
+        type="text"
+        id="message-input"
+        placeholder="Escribe un mensaje…"
+        maxlength="500"
+        autocomplete="off"
+      />
+      <button id="send-btn" title="Enviar mensaje">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+        </svg>
+      </button>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

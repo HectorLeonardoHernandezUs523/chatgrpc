@@ -1,0 +1,39 @@
+# =============================================================================
+# render.yaml — Configuración de despliegue en Render
+# =============================================================================
+# Este archivo define cómo Render debe construir y ejecutar el servicio.
+# Render detecta automáticamente este archivo en la raíz del repositorio.
+#
+# Documentación: https://docs.render.com/blueprint-spec
+# =============================================================================
+
+services:
+  - type: web
+    name: grpc-chat
+    runtime: python
+    region: oregon
+
+    # Directorio raíz del backend
+    rootDir: backend
+
+    # Comando de compilación: instalar dependencias y generar stubs gRPC
+    buildCommand: |
+      pip install -r requirements.txt
+      python -m grpc_tools.protoc -I./protos --python_out=. --grpc_python_out=. ./protos/chat.proto
+
+    # Comando de inicio: usar gunicorn para producción
+    startCommand: gunicorn server:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --preload
+
+    # Variables de entorno configuradas en el panel de Render
+    envVars:
+      - key: FIREBASE_CREDENTIALS_JSON
+        sync: false  # Se configura manualmente en el dashboard de Render
+      - key: FIRESTORE_COLLECTION
+        value: messages
+      - key: GRPC_PORT
+        value: "50051"
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+
+    # Health check
+    healthCheckPath: /health
